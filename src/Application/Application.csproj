@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	  <RootNamespace>ShedulingReminders.Application</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
+		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.0" />
+		<PackageReference Include="Hangfire.Core" Version="1.8.0" />
+		<PackageReference Include="Hangfire.SqlServer" Version="1.8.0" />
+		
+		<PackageReference Include="MediatR" Version="11.0.0" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Handlers\Authorizations\ValidationRules\" />
+    <Folder Include="Handlers\Authorizations\Queries\" />
+    <Folder Include="Services\Authentication\Model\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Common\Constants\Messages.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Common\Constants\Messages.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
