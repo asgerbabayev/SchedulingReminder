@@ -7,7 +7,7 @@ on:
     - main
     
 env:
-  SOLUTION_NAME: "./SchedulingReminder.sln"
+  SOLUTION_NAME: "SchedulingReminder.sln"
     
 jobs:
   publish:
