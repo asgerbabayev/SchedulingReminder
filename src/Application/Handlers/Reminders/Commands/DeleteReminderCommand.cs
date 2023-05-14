@@ -3,21 +3,24 @@
 /// <summary>
 /// Represents a command for deleting a reminder.
 /// </summary>
-public class DeleteRemindersCommand : IRequest<IResult>
+public record DeleteRemindersCommand(List<Guid> ReminderIds) : IRequest<IResult>
 {
-    public List<Guid> ReminderIds { get; set; } = null!;
-
     /// <summary>
     /// Represents the handler for the DeleteRemindersCommand.
     /// </summary>
     public class DeleteRemindersCommandHandler : IRequestHandler<DeleteRemindersCommand, IResult>
     {
         private readonly IApplicationDbContext _context;
+        private readonly ICurrentUserService _currentUserService;
 
-        public DeleteRemindersCommandHandler(IApplicationDbContext context)
+        #region Constructor
+        public DeleteRemindersCommandHandler(IApplicationDbContext context,
+          ICurrentUserService currentUserService)
         {
             _context = context;
+            _currentUserService = currentUserService;
         }
+        #endregion
 
         /// <summary>
         /// Handles the DeleteRemindersCommand and deletes the corresponding reminders from the database.
@@ -29,7 +32,7 @@ public class DeleteRemindersCommand : IRequest<IResult>
         {
             // Retrieve the reminders to delete from the database based on the provided IDs
             List<Reminder> remindersToDelete = await _context.Reminders
-                .Where(x => request.ReminderIds.Contains(x.Id))
+                .Where(x => x.AppUser.UserName == _currentUserService.UserName && request.ReminderIds.Contains(x.Id))
                 .ToListAsync();
 
             if (!remindersToDelete.Any())

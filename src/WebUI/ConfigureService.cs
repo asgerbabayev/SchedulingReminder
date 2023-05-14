@@ -25,7 +25,7 @@ public static class ConfigureService
         {
             options.AddSlidingWindowLimiter("Sliding", config =>
             {
-                config.Window = TimeSpan.FromSeconds(10);
+                config.Window = TimeSpan.FromSeconds(8);
                 config.PermitLimit = 4;
                 config.QueueLimit = 2;
                 config.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;

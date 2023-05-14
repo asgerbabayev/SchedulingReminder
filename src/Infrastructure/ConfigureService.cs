@@ -35,6 +35,7 @@ public static class ConfigureServices
         // Register EmailService and TelegramService as scoped services
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<ITelegramService, TelegramService>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 
         services.AddAuthentication(options =>
@@ -46,9 +47,9 @@ public static class ConfigureServices
         {
             option.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidAudience = configuration.GetSection("Jwt:Audience").Value,
-                ValidIssuer = configuration.GetSection("Jwt:Issuer").Value,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("Jwt:SecurityKey").Value)),
+                ValidAudience = configuration.GetSection("TokenOptions:Audience").Value,
+                ValidIssuer = configuration.GetSection("TokenOptions:Issuer").Value,
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("TokenOptions:SecurityKey").Value)),
                 ClockSkew = TimeSpan.Zero,
                 ValidateIssuerSigningKey = true,
             };

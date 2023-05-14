@@ -21,6 +21,7 @@ namespace ShedulingReminders.WebUI.Controllers.V1
         ///     message: this a message box
         /// </remarks>
         /// <returns></returns>
+        [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateReminderCommand))]

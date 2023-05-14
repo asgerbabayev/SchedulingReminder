@@ -26,7 +26,7 @@ public static class StringExtension
     {
         foreach (var item in Enum.GetValues(typeof(Methods)))
         {
-            if (method.Trim().ToLower().Contains(item.ToString().Trim().ToLower()))
+            if (method.Trim().ToLower().Equals(item.ToString().Trim().ToLower()))
             {
                 return true;
             }

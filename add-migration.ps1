@@ -1,0 +1,1 @@
+dotnet ef migrations add Initialize_$(Get-Date -Format "ddMMyyyHHmmss") -p .\src\Infrastructure\ -s .\src\WebUI\ -o Persistance\Migrations

@@ -1,42 +1,39 @@
-﻿
-
-namespace ShedulingReminders.WebUI.Controllers.V1
+﻿namespace ShedulingReminders.WebUI.Controllers.V1
 {
-    /// <summary>
-    /// Make it Authorization operations
-    /// </summary>
+
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class AuthController : BaseApiController
     {
-        /// <summary>
-        /// Make it User Login operations
-        /// </summary>
-        /// <returns></returns>
+
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPost("login")]
-        public async Task<IActionResult> Login()
+        public async Task<IActionResult> Login(LoginUserCommand loginUserCommand)
         {
-            return Ok();
+            var result = await Mediator.Send(loginUserCommand);
+            return result.Success ? Ok(result) : Unauthorized(result.Message);
         }
 
+
         /// <summary>
-        ///  Make it User Register operations
+        /// Registers a new user.
         /// </summary>
-        /// <returns></returns>
+        /// <param name="registerUserCommand">The command containing user registration data.</param>
+        /// <returns>The result of the registration operation.</returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IResult))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(IResult))]
         [HttpPost("register")]
-        public async Task<IActionResult> Register()
+        public async Task<IActionResult> Register(RegisterUserCommand registerUserCommand)
         {
-            return Ok();
+            return GetResponseOnlyResultMessage(await Mediator.Send(registerUserCommand));
         }
+
     }
 }

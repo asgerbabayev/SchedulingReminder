@@ -5,7 +5,7 @@
 /// </summary>
 public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
 {
-    //private readonly ICurrentUserService _currentUserService;
+    private readonly ICurrentUserService _currentUserService;
     private readonly IDateTime _dateTime;
 
     /// <summary>
@@ -14,12 +14,12 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
     /// <param name="currentUserService">The current user service used to retrieve the current user's information.</param>
     /// <param name="dateTime">The date time service used to retrieve the current date and time.</param>
     public AuditableEntitySaveChangesInterceptor(
-        IDateTime dateTime
-        //ICurrentUserService currentUserService
+        IDateTime dateTime,
+        ICurrentUserService currentUserService
         )
     {
         _dateTime = dateTime;
-        //_currentUserService = currentUserService;
+        _currentUserService = currentUserService;
     }
 
     /// <summary>
@@ -61,13 +61,13 @@ public class AuditableEntitySaveChangesInterceptor : SaveChangesInterceptor
         {
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedBy = "User";
+                entry.Entity.CreatedBy = _currentUserService.UserName != null ? _currentUserService.UserName : "User";
                 entry.Entity.CreatedDate = _dateTime.Now;
             }
 
             if (entry.State == EntityState.Added || entry.State == EntityState.Modified)
             {
-                entry.Entity.ModifiedBy = "User";
+                entry.Entity.ModifiedBy = _currentUserService.UserName != null ? _currentUserService.UserName : "User";
                 entry.Entity.ModifiedDate = _dateTime.Now;
             }
         }

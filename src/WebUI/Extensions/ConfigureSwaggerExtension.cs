@@ -19,14 +19,37 @@ public static class ConfigureSwaggerExtension
     /// <returns>The updated <see cref="IServiceCollection"/>.</returns>
     public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
     {
-        services.AddSwaggerGen(c =>
+        services.AddSwaggerGen(opt =>
         {
             // Resolves conflicting actions by selecting the first one
-            c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
+            opt.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 
             // Includes XML comments for Swagger documentation
-            c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,
+            opt.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,
                 $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
+            opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                In = ParameterLocation.Header,
+                Description = "Please enter a valid token",
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                BearerFormat = "JWT",
+                Scheme = "Bearer",
+            });
+            opt.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
         });
 
         services.ConfigureOptions<ConfigureSwaggerOptions>();

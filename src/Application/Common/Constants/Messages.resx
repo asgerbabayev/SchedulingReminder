@@ -120,14 +120,32 @@
   <data name="Added" xml:space="preserve">
     <value>Added Successfully</value>
   </data>
+  <data name="EmailAlreadyExist" xml:space="preserve">
+    <value>Email Already Exist</value>
+  </data>
+  <data name="InvalidCredentials" xml:space="preserve">
+    <value>Invalid Credentials</value>
+  </data>
   <data name="InvalidDate" xml:space="preserve">
     <value>Invalid Date</value>
+  </data>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>Invalid Email Address</value>
   </data>
   <data name="InvalidMethod" xml:space="preserve">
     <value>Invalid Method</value>
   </data>
+  <data name="InvalidTelegramId" xml:space="preserve">
+    <value>Invalid Telegram Id</value>
+  </data>
   <data name="InvalidTo" xml:space="preserve">
     <value>Invalid To value</value>
+  </data>
+  <data name="LoginSuccessfully" xml:space="preserve">
+    <value>Login Successfully</value>
+  </data>
+  <data name="RegisterSuccessfully" xml:space="preserve">
+    <value>Register Successfully</value>
   </data>
   <data name="ReminderDeleted" xml:space="preserve">
     <value>Reminder Deleted</value>
@@ -140,5 +158,8 @@
   </data>
   <data name="ReminderUpdated" xml:space="preserve">
     <value>Reminder Updated</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>User Not Found</value>
   </data>
 </root>

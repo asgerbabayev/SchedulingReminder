@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddApplicationServices(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
@@ -20,15 +20,11 @@ var app = builder.Build();
 
 app.UseRateLimiter();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    using IServiceScope scope = app.Services.CreateScope();
-    AppDbContextInitialiser initializer = scope.ServiceProvider.GetRequiredService<AppDbContextInitialiser>();
-    await initializer.InitializeAsync();
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+using IServiceScope scope = app.Services.CreateScope();
+AppDbContextInitialiser initializer = scope.ServiceProvider.GetRequiredService<AppDbContextInitialiser>();
+await initializer.InitializeAsync();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionHandlingMiddleware>();

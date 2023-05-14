@@ -6,6 +6,7 @@ namespace ShedulingReminders.WebUI.Controllers.Base
     /// <summary>
     /// Base controller
     /// </summary>
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     [EnableRateLimiting("Sliding")]

@@ -8,5 +8,5 @@ public interface ICurrentUserService
     /// <summary>
     /// Gets the user ID of the current user.
     /// </summary>
-    string? UserId { get; }
+    string? UserName { get; }
 }

@@ -25,10 +25,6 @@ public class Reminder : BaseAuditableEntity
     /// </summary>
     public string Method { get; set; } = null!;
 
-    /// <summary>
-    /// The application user associated with the reminder.
-    /// </summary>
-    public virtual AppUser? AppUser { get; set; }
-
     public string? JobId { get; set; }
+    public virtual AppUser? AppUser { get; set; }
 }

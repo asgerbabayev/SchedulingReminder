@@ -1,6 +1,6 @@
 ﻿namespace ShedulingReminders.Application.Common.Results
 {
-    public class ErrorDataResult<T> : DataResult<T>
+    public record ErrorDataResult<T> : DataResult<T>
     {
         public ErrorDataResult(T data, string message)
             : base(data, false, message)

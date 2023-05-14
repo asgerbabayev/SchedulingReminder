@@ -1,6 +1,6 @@
 ﻿namespace ShedulingReminders.Application.Common.Results
 {
-    public class SuccessResult : Result
+    public record SuccessResult : Result
     {
         public SuccessResult(string message)
             : base(true, message)

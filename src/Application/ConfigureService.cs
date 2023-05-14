@@ -1,4 +1,6 @@
-﻿namespace ShedulingReminders.Application;
+﻿using ShedulingReminders.Application.Common.Security.Jwt;
+
+namespace ShedulingReminders.Application;
 
 /// <summary>
 /// Provides extension methods for configuring application services.
@@ -29,6 +31,8 @@ public static class ConfigureServices
 
         // Adds validators from the executing assembly
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+        services.AddScoped<ITokenHelper, JwtHelper>();
 
         return services;
     }

@@ -70,11 +70,38 @@ namespace ShedulingReminders.Application.Common.Constants {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email Already Exist.
+        /// </summary>
+        public static string EmailAlreadyExist {
+            get {
+                return ResourceManager.GetString("EmailAlreadyExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Credentials.
+        /// </summary>
+        public static string InvalidCredentials {
+            get {
+                return ResourceManager.GetString("InvalidCredentials", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Date.
         /// </summary>
         public static string InvalidDate {
             get {
                 return ResourceManager.GetString("InvalidDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Email Address.
+        /// </summary>
+        public static string InvalidEmail {
+            get {
+                return ResourceManager.GetString("InvalidEmail", resourceCulture);
             }
         }
         
@@ -88,11 +115,38 @@ namespace ShedulingReminders.Application.Common.Constants {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Telegram Id.
+        /// </summary>
+        public static string InvalidTelegramId {
+            get {
+                return ResourceManager.GetString("InvalidTelegramId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid To value.
         /// </summary>
         public static string InvalidTo {
             get {
                 return ResourceManager.GetString("InvalidTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login Successfully.
+        /// </summary>
+        public static string LoginSuccessfully {
+            get {
+                return ResourceManager.GetString("LoginSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Register Successfully.
+        /// </summary>
+        public static string RegisterSuccessfully {
+            get {
+                return ResourceManager.GetString("RegisterSuccessfully", resourceCulture);
             }
         }
         
@@ -129,6 +183,15 @@ namespace ShedulingReminders.Application.Common.Constants {
         public static string ReminderUpdated {
             get {
                 return ResourceManager.GetString("ReminderUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Not Found.
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
             }
         }
     }

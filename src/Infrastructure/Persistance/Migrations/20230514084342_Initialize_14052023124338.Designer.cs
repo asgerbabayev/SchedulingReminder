@@ -12,8 +12,8 @@ using ShedulingReminders.Infrastructure.Persistance;
 namespace ShedulingReminders.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230513213841_init_mig")]
-    partial class init_mig
+    [Migration("20230514084342_Initialize_14052023124338")]
+    partial class Initialize_14052023124338
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,21 +162,21 @@ namespace ShedulingReminders.Infrastructure.Persistance.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("NEWID()");
 
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("Getutcdate()");
 
                     b.Property<string>("JobId")
                         .HasColumnType("nvarchar(max)");
@@ -186,7 +186,8 @@ namespace ShedulingReminders.Infrastructure.Persistance.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
@@ -199,8 +200,6 @@ namespace ShedulingReminders.Infrastructure.Persistance.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
 
                     b.ToTable("Reminders");
                 });
@@ -223,6 +222,10 @@ namespace ShedulingReminders.Infrastructure.Persistance.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -249,9 +252,6 @@ namespace ShedulingReminders.Infrastructure.Persistance.Migrations
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TelegramId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -322,21 +322,6 @@ namespace ShedulingReminders.Infrastructure.Persistance.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("ShedulingReminders.Domain.Entities.Reminder", b =>
-                {
-                    b.HasOne("ShedulingReminders.Domain.Identity.AppUser", "AppUser")
-                        .WithMany("Reminders")
-                        .HasForeignKey("AppUserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("AppUser");
-                });
-
-            modelBuilder.Entity("ShedulingReminders.Domain.Identity.AppUser", b =>
-                {
-                    b.Navigation("Reminders");
                 });
 #pragma warning restore 612, 618
         }

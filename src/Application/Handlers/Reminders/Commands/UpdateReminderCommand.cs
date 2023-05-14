@@ -1,5 +1,4 @@
-﻿using ShedulingReminders.Application.Common.Extensions;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace ShedulingReminders.Application.Handlers.Reminders.Commands;
 
@@ -24,16 +23,19 @@ public class UpdateReminderCommand : IRequest<IDataResult<UpdateReminderCommand>
         private readonly IApplicationDbContext _context;
         private readonly IEmailService _emailService;
         private readonly ITelegramService _telegramService;
+        private readonly ICurrentUserService _currentUserService;
 
         #region Constructor
         public UpdateReminderCommandHandler(
             IApplicationDbContext context,
             IEmailService emailService,
-            ITelegramService telegramService)
+            ITelegramService telegramService,
+            ICurrentUserService currentUserService)
         {
             _context = context;
             _emailService = emailService;
             _telegramService = telegramService;
+            _currentUserService = currentUserService;
         }
         #endregion
 
@@ -46,7 +48,9 @@ public class UpdateReminderCommand : IRequest<IDataResult<UpdateReminderCommand>
         public async Task<IDataResult<UpdateReminderCommand>> Handle(UpdateReminderCommand request, CancellationToken cancellationToken)
         {
             // Retrieve the reminder to update from the database based on the provided ID
-            Reminder? reminderToUpdate = await _context.Reminders.FirstOrDefaultAsync(x => x.Id == request.Id);
+            Reminder? reminderToUpdate = await _context.Reminders.
+                FirstOrDefaultAsync(x =>
+                x.AppUser.UserName == _currentUserService.UserName && x.Id == request.Id);
 
             if (reminderToUpdate is null)
             {

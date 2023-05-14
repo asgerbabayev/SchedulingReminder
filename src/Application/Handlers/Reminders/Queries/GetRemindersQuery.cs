@@ -1,4 +1,6 @@
-﻿namespace ShedulingReminders.Application.Handlers.Reminders.Queries;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace ShedulingReminders.Application.Handlers.Reminders.Queries;
 
 public class GetRemindersQuery : IRequest<IDataResult<IEnumerable<GetRemindersQuery>>>
 {
@@ -11,15 +13,23 @@ public class GetRemindersQuery : IRequest<IDataResult<IEnumerable<GetRemindersQu
     {
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public GetRemindersQueryHandler(IApplicationDbContext context, IMapper mapper)
+        private readonly IHttpContextAccessor _accessor;
+        #region Constructor
+        public GetRemindersQueryHandler(IApplicationDbContext context,
+            IMapper mapper, IHttpContextAccessor accessor)
         {
             _context = context;
             _mapper = mapper;
+            _accessor = accessor;
         }
+        #endregion
         public async Task<IDataResult<IEnumerable<GetRemindersQuery>>> Handle(GetRemindersQuery request, CancellationToken cancellationToken)
         {
             return new SuccessDataResult<IEnumerable<GetRemindersQuery>>(
-                _mapper.Map<IEnumerable<GetRemindersQuery>>(await _context.Reminders.AsNoTracking().ToListAsync()));
+                _mapper.Map<IEnumerable<GetRemindersQuery>>(await _context.Reminders.
+                Include(x => x.AppUser).AsNoTracking().
+                Where(x =>
+                x.AppUser.UserName == _accessor.HttpContext.User.Identity.Name).ToListAsync()));
         }
     }
 }
