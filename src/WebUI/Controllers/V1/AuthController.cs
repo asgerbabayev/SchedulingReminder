@@ -6,10 +6,15 @@
     public class AuthController : BaseApiController
     {
 
+        /// <summary>
+        /// Logs in a user.
+        /// </summary>
+        /// <param name="loginUserCommand">The command containing user login data.</param>
+        /// <returns>The access token data if the login is successful, or an unauthorized message otherwise.</returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDataResult<AccessToken>))]
         [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(string))]
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginUserCommand loginUserCommand)
@@ -17,7 +22,6 @@
             var result = await Mediator.Send(loginUserCommand);
             return result.Success ? Ok(result) : Unauthorized(result.Message);
         }
-
 
         /// <summary>
         /// Registers a new user.

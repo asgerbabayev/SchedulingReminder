@@ -29,6 +29,6 @@ public class EmailService : IEmailService
             EnableSsl = true,
         };
 
-        smtpClient.Send(_configuration["SendinBlue:Email"], to, "subject", content);
+        smtpClient.Send(_configuration["SendinBlue:Email"], to, "Reminder", content);
     }
 }

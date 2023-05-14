@@ -12,54 +12,53 @@ namespace ShedulingReminders.WebUI.Controllers.V1
     public class RemindersController : BaseApiController
     {
         /// <summary>
-        /// Added Reminder
+        /// Creates a new reminder.
         /// </summary>
-        /// <param name="createReminderCommand"></param>
-        /// <remarks>
-        /// Post
-        ///     success: true
-        ///     message: this a message box
-        /// </remarks>
-        /// <returns></returns>
+        /// <param name="createReminderCommand">The command containing reminder creation data.</param>
+        /// <returns>The created reminder data if successful, or an error message otherwise.</returns>
         [AllowAnonymous]
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateReminderCommand))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPost]
-        public async Task<IActionResult> Post(
-        [FromBody] CreateReminderCommand createReminderCommand)
+        public async Task<IActionResult> Post([FromBody] CreateReminderCommand createReminderCommand)
         {
             return GetResponseOnlyResultData(await Mediator.Send(createReminderCommand));
         }
 
-
+        /// <summary>
+        /// Deletes reminders.
+        /// </summary>
+        /// <param name="deleteRemindersCommand">The command containing reminder deletion data.</param>
+        /// <returns>The result of the deletion operation.</returns>
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
         [HttpDelete]
-        public async Task<IActionResult> Delete(
-        [FromForm] DeleteRemindersCommand deleteRemindersCommand)
+        public async Task<IActionResult> Delete([FromForm] DeleteRemindersCommand deleteRemindersCommand)
         {
             return GetResponseOnlyResultMessage(await Mediator.Send(deleteRemindersCommand));
         }
 
+        /// <summary>
+        /// Updates a reminder.
+        /// </summary>
+        /// <param name="updateReminderCommand">The command containing reminder update data.</param>
+        /// <returns>The updated reminder data if successful, or an error message otherwise.</returns>
         [Consumes("application/json")]
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(UpdateReminderCommand))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
         [HttpPut]
-        public async Task<IActionResult> Put(
-        [FromBody] UpdateReminderCommand updateReminderCommand)
+        public async Task<IActionResult> Put([FromBody] UpdateReminderCommand updateReminderCommand)
         {
             return GetResponseOnlyResultData(await Mediator.Send(updateReminderCommand));
         }
 
         /// <summary>
-        /// List Reminders
+        /// Retrieves a list of reminders.
         /// </summary>
-        /// <remarks>Get Reminders</remarks>
-        /// <return>Languages List</return>
-        /// <response code="200"></response>
+        /// <returns>The list of reminders if successful, or an error message otherwise.</returns>
         [Produces("application/json", "text/plain")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GetRemindersQuery>))]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(string))]
@@ -68,6 +67,5 @@ namespace ShedulingReminders.WebUI.Controllers.V1
         {
             return GetResponseOnlyResultData(await Mediator.Send(new GetRemindersQuery()));
         }
-
     }
 }
