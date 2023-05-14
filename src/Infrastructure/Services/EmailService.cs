@@ -1,4 +1,7 @@
-﻿namespace ShedulingReminders.Infrastructure.Services;
+﻿using System.Net;
+using System.Net.Mail;
+
+namespace ShedulingReminders.Infrastructure.Services;
 
 /// <summary>
 /// Service for sending emails.
@@ -19,21 +22,13 @@ public class EmailService : IEmailService
     /// <param name="content">Content of the email.</param>
     public void SendEmail(string to, string content)
     {
-        var apiKey = _configuration["SendinBlue:ApiKey"];
-        Configuration.Default.ApiKey.Add("api-key", apiKey);
-        var apiInstance = new TransactionalEmailsApi();
+        var smtpClient = new SmtpClient("smtp-relay.sendinblue.com")
+        {
+            Port = 587,
+            Credentials = new NetworkCredential("asgerbabayev@hotmail.com", "QaDqfOymIR1B6nHW"),
+            EnableSsl = true,
+        };
 
-        SendSmtpEmailSender email = new SendSmtpEmailSender(
-            _configuration["SendinBlue:User"],
-            _configuration["SendinBlue:Email"]
-        );
-
-
-        SendSmtpEmailTo smtpEmailTo = new SendSmtpEmailTo(to, "User");
-        List<SendSmtpEmailTo> tos = new List<SendSmtpEmailTo>() { smtpEmailTo };
-
-        var sendSmtpEmail = new SendSmtpEmail(email, to: tos, textContent: content, subject: "Reminder");
-
-        apiInstance.SendTransacEmail(sendSmtpEmail);
+        smtpClient.Send(_configuration["SendinBlue:Email"], to, "subject", content);
     }
 }
